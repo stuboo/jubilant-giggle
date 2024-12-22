@@ -6,7 +6,7 @@ import { Textarea } from '@/components/ui/textarea'
 import { Label } from '@/components/ui/label'
 import { useUserInfo } from '../contexts/UserInfoContext'
 
-const letterTemplate = `I am writing to express my strong opposition to the school voucher bill currently being debated. Public schools in our community play a critical role in educating all children and preparing them for a successful future. This bill threatens to undermine these efforts by paving the way for funding to be diverted to private schools that are not held to the same standards or serve all students.
+const letterTemplate = `I am writing to express my strong opposition to the Education Freedom Act of 2025, a bill currently being considered. Public schools in our community play a critical role in educating all children and preparing them for a successful future. This bill threatens to undermine these efforts by paving the way for funding to be diverted to private schools that are not held to the same standards or serve all students.
 
 Our public schools are already underfunded and face significant challenges. Diverting resources, even indirectly, risks further harming the children who rely on public education the most. Instead of creating voucher programs, we should focus on increasing support for public schools to ensure every student has access to high-quality education.
 

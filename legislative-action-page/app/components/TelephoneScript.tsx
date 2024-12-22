@@ -6,12 +6,12 @@ import { useUserInfo } from '../contexts/UserInfoContext'
 import { Phone } from 'lucide-react'
 
 const phoneScript = `Introduction:
-Hello, my name is [Your Name], and I'm a constituent from [Your City]. I'm calling to urge the legislator to oppose the school voucher bill being considered.
+Hello, my name is [Your Name], and I'm a constituent from [Your City]. I'm calling to urge you to oppose the Education Freedom Act of 2025.
 
 Message:
-This bill risks harming our public schools, which are the backbone of our community. Public schools serve every child, while private schools do not. Although the bill claims to use private funds initially, it sets a precedent that could weaken public education in the future.
+This bill risks harming our public schools, which are the backbone of our community. Public schools serve every child, while private schools do not. This bill threatens to undermine these efforts by paving the way for funding to be diverted to private schools that are not held to the same standards or serve all students.
 
-We need to prioritize fully funding and improving public schools, not diverting attention and resources to private interests. I hope they will stand with public schools and vote against this harmful bill.
+We need to prioritize fully funding and improving public schools, not diverting attention and resources to private interests. I hope you will stand with public schools and vote against this harmful bill.
 
 Conclusion:
 Thank you for your time and for considering my concerns. I appreciate your service to our community.`
