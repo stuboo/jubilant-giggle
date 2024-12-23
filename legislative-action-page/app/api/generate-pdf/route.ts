@@ -122,8 +122,8 @@ export async function POST(request: Request) {
       body: JSON.stringify({
         source: letterHtml,
         format: 'Letter',
-        margin: '1in',
-        sandbox: true
+        margin: '1in'
+        // sandbox: true
       })
     })
 
