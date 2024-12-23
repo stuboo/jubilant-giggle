@@ -13,6 +13,9 @@ export async function POST(request: Request) {
       )
     }
 
+    // Debug log to check environment variable
+    console.log('API Key available:', !!PDFSHIFT_API_KEY)
+
     const formattedDate = new Date().toLocaleDateString('en-US', {
       month: 'long',
       day: 'numeric',
@@ -126,10 +129,11 @@ export async function POST(request: Request) {
 
     if (!response.ok) {
       const errorText = await response.text()
-      console.error('PDFShift API Error:', {
+      console.error('PDFShift API Error Details:', {
         status: response.status,
         statusText: response.statusText,
-        error: errorText
+        error: errorText,
+        apiKeyLength: PDFSHIFT_API_KEY?.length || 0
       })
       throw new Error(`PDFShift API error: ${response.status} ${response.statusText} - ${errorText}`)
     }
