@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 
-const PDFSHIFT_API_KEY = 'sandbox' // Use 'sandbox' for testing
+const PDFSHIFT_API_KEY = process.env.PDFSHIFT_API_KEY
 
 export async function POST(request: Request) {
   try {
@@ -119,7 +119,8 @@ export async function POST(request: Request) {
       body: JSON.stringify({
         source: letterHtml,
         format: 'Letter',
-        margin: '1in'
+        margin: '1in',
+        sandbox: true
       })
     })
 
