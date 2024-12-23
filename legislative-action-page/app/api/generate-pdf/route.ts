@@ -109,7 +109,8 @@ export async function POST(request: Request) {
     `).join('')
 
     // Convert HTML to PDF using PDFShift API
-    const response = await fetch('https://api.pdfshift.io/v3/convert/pdf', {
+    console.log('Making request to PDFShift API...')
+    const response = await fetch('https://api.pdfshift.io/v2/convert', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -123,9 +124,16 @@ export async function POST(request: Request) {
     })
 
     if (!response.ok) {
-      throw new Error(`PDFShift API error: ${response.statusText}`)
+      const errorText = await response.text()
+      console.error('PDFShift API Error:', {
+        status: response.status,
+        statusText: response.statusText,
+        error: errorText
+      })
+      throw new Error(`PDFShift API error: ${response.status} ${response.statusText} - ${errorText}`)
     }
 
+    console.log('Successfully received PDF from PDFShift')
     const pdf = await response.arrayBuffer()
 
     return new NextResponse(pdf, {
@@ -135,9 +143,9 @@ export async function POST(request: Request) {
       }
     })
   } catch (error) {
-    console.error('Error generating PDF:', error)
+    console.error('Error in PDF generation:', error)
     return NextResponse.json(
-      { error: 'Failed to generate PDF' },
+      { error: 'Failed to generate PDF', details: error.message },
       { status: 500 }
     )
   }
