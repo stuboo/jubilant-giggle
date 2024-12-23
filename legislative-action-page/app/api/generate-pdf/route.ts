@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
-import puppeteer from 'puppeteer'
+
+const PDFSHIFT_API_KEY = 'sandbox' // Use 'sandbox' for testing
 
 export async function POST(request: Request) {
   try {
@@ -11,9 +12,6 @@ export async function POST(request: Request) {
         { status: 400 }
       )
     }
-
-    const browser = await puppeteer.launch({ headless: true })
-    const page = await browser.newPage()
 
     const formattedDate = new Date().toLocaleDateString('en-US', {
       month: 'long',
@@ -27,6 +25,7 @@ export async function POST(request: Request) {
       <!DOCTYPE html>
       <html>
         <head>
+          <meta charset="UTF-8">
           <style>
             @page {
               size: letter;
@@ -64,7 +63,7 @@ export async function POST(request: Request) {
               margin-bottom: 24pt;
             }
             .closing {
-              margin-bottom: 48pt; /* 4 line spaces for signature */
+              margin-bottom: 48pt;
             }
             .signature {
               margin-bottom: 0;
@@ -109,25 +108,26 @@ export async function POST(request: Request) {
       </html>
     `).join('')
 
-    // Set content with both letters
-    await page.setContent(letterHtml)
-
-    // Generate PDF with exact 8.5" x 11" dimensions
-    const pdf = await page.pdf({
-      format: 'Letter', // 8.5" x 11"
-      margin: {
-        top: '1in',
-        right: '1in',
-        bottom: '1in',
-        left: '1in'
+    // Convert HTML to PDF using PDFShift API
+    const response = await fetch('https://api.pdfshift.io/v3/convert/pdf', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Basic ${Buffer.from(PDFSHIFT_API_KEY + ':').toString('base64')}`
       },
-      printBackground: true,
-      preferCSSPageSize: true
+      body: JSON.stringify({
+        source: letterHtml,
+        format: 'Letter',
+        margin: '1in'
+      })
     })
 
-    await browser.close()
+    if (!response.ok) {
+      throw new Error(`PDFShift API error: ${response.statusText}`)
+    }
 
-    // Return the PDF with appropriate headers
+    const pdf = await response.arrayBuffer()
+
     return new NextResponse(pdf, {
       headers: {
         'Content-Type': 'application/pdf',
